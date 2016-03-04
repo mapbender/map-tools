@@ -8,7 +8,7 @@
         {"name": "Paul Schmidt",  "email": "paul.schmidt@wheregroup.com"}
     ],
     "require": {
-        "php": "5.3.x"
+        "php": ">=5.3.3","
     },
     "config": {
         "bin-dir": "bin"
