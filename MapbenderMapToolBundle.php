@@ -15,9 +15,8 @@ class MapbenderMapToolBundle extends MapbenderBundle
     public function getElements()
     {
         return array(
-            
+            "Mapbender\MapToolBundle\Element\MapCoordinate"
         );
     }
-
 }
 
