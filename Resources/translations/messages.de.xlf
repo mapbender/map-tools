@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="9046c479023ddf2b0a34a4b2e0c75ac2" resname="mb.maptool.mapcoordinate.extern.crs.title">
         <source>mb.maptool.mapcoordinate.extern.crs.title</source>
-        <target>Koordinatensystem</target>
+        <target>Coordinate system</target>
       </trans-unit>
       <trans-unit id="a2e1f4151dee33dfd720af13ba455708" resname="mb.maptool.mapcoordinate.extern.crs.tooltip">
         <source>mb.maptool.mapcoordinate.extern.crs.tooltip</source>
-        <target>Koordinatensystem</target>
+        <target>Coordinate system</target>
       </trans-unit>
       <trans-unit id="23ca95ee3a5d9be0cef39ff8d3e5be34" resname="mb.maptool.mapcoordinate.extern.input_coords.tooltip">
         <source>mb.maptool.mapcoordinate.extern.input_coords.tooltip</source>
-        <target>Input/Output Koordinaten. Bei Eingaben müssen Ordinaten mit ',' bzw. mit ' ' getrennt werden</target>
+        <target>Input/Output coordinates. Use ',' or ' ' to separate ordinates</target>
       </trans-unit>
       <trans-unit id="44fb559107a6b5675727eb5f6921bace" resname="mb.maptool.mapcoordinate.copytoclipboard.tooltip">
         <source>mb.maptool.mapcoordinate.copytoclipboard.tooltip</source>
-        <target>Kopieren in die Zwischenablage</target>
+        <target>Copy to clipboard</target>
       </trans-unit>
       <trans-unit id="44f97a8056c8786fb20b3205990ee1ca" resname="mb.maptool.mapcoordinate.intern.coords.title">
         <source>mb.maptool.mapcoordinate.intern.coords.title</source>
-        <target>Koordinate im Karten-Bezugssystem</target>
+        <target>Coordinate in map reference system</target>
       </trans-unit>
       <trans-unit id="ae484a22198866fce9d390a00b61b164" resname="mb.maptool.mapcoordinate.intern.input_coords.tooltip">
         <source>mb.maptool.mapcoordinate.intern.input_coords.tooltip</source>
-        <target>nur zum Lesen</target>
+        <target>read only</target>
       </trans-unit>
       <trans-unit id="86929cc063d8e760374d002fb4f76682" resname="mb.maptool.mapcoordinate.button.reset">
         <source>mb.maptool.mapcoordinate.button.reset</source>
-        <target>Zurücksetzen</target>
+        <target>Reset</target>
       </trans-unit>
       <trans-unit id="1e63f3d8391e7da1b0f081dd65c11a00" resname="mb.maptool.mapcoordinate.button.clickcoordinate">
         <source>mb.maptool.mapcoordinate.button.clickcoordinate</source>
-        <target>Koordinate vom Klick</target>
+        <target>Click's coordinate</target>
       </trans-unit>
       <trans-unit id="9436fdb9bf01b3d7d6fc81f69dbf859e" resname="mb.maptool.mapcoordinate.button.centermap">
         <source>mb.maptool.mapcoordinate.button.centermap</source>
-        <target>Zentriere die Karte</target>
+        <target>Center map</target>
       </trans-unit>
     </body>
   </file>
