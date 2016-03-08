@@ -22,7 +22,7 @@ class MapCoordinate extends Element
      */
     public static function getClassTitle()
     {
-        return "Map Koordinate"; #"mb.core.mapcoordinate.class.title";
+        return "mb.core.mapcoordinate.class.title";
     }
 
     /**
@@ -30,8 +30,7 @@ class MapCoordinate extends Element
      */
     public static function getClassDescription()
     {
-        return 'Mit dem "Map Koordinate" kann die Klick-Koordinate ausgelesen werden' .
-            ' und die Karte kann auf die gegebene Koordinate zentriert werden.'; #"mb.core.mapcoordinate.class.description";
+        return "mb.core.mapcoordinate.class.description";
     }
 
     /**
@@ -39,7 +38,11 @@ class MapCoordinate extends Element
      */
     public static function getClassTags()
     {
-        return array(); #('mb.core.mapcoordinate.tag.coordinate');
+        return array(
+            'mb.core.mapcoordinate.tag.coordinate',
+            'mb.core.mapcoordinate.tag.tool',
+            'mb.core.mapcoordinate.tag.map'
+        );
     }
 
     /**
