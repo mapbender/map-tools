@@ -7,18 +7,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Description of SearchAdminType
+ * Description of InputOutputCoordinateAdminType
  *
  * @author Paul Schmidt
  */
-class MapCoordinateAdminType extends AbstractType
+class InputOutputCoordinateAdminType extends AbstractType
 {
     /**
      * @inheritdoc
      */
     public function getName()
     {
-        return 'mapcoordinate';
+        return 'inputoutputcoordinate';
     }
     /**
      * @inheritdoc
@@ -35,12 +35,6 @@ class MapCoordinateAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text', array('required' => false))
-            ->add('tools', 'choice', array(
-                'required' => true,
-                'multiple' => true,
-                'choices' => array(
-                    'centermap' => 'Center map',
-                    'clickcoordinate' => 'Click coordinate')))
             ->add('type', 'choice', array(
                 'required' => true,
                 'choices' => array(

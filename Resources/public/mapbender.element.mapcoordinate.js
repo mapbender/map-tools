@@ -54,7 +54,7 @@
                     position: new OpenLayers.LonLat(point.x, point.y),
                     label: ""
                 };
-                this.feature = new OpenLayers.Feature.Vector(point, poi);
+                this.feature = [new OpenLayers.Feature.Vector(point, poi)];
                 Mapbender.Model.highlightOn(this.feature, {clearFirst: true, "goto": false});
                 if (inputSrs.projCode !== mapProj.projCode) {
                     point = point.transform(mapProj, inputSrs);
@@ -126,7 +126,7 @@
                         position: new OpenLayers.LonLat(point.x, point.y),
                         label: ""
                     };
-                    this.feature = new OpenLayers.Feature.Vector(point, poi);
+                    this.feature = [new OpenLayers.Feature.Vector(point, poi)];
                     Mapbender.Model.highlightOn(this.feature, {clearFirst: true, "goto": false});
                     var ext_buff = Mapbender.Model.calculateExtent(point, {w: this.buffer, h: this.buffer});
                     console.log(point, ext_buff);
