@@ -94,6 +94,10 @@
         <source>mb.maptool.searchcoordinate.button.centermap</source>
         <target>Center map</target>
       </trans-unit>
+      <trans-unit id="1fac12c7defccc936626b5f801c45c8e" resname="mb.maptool.clickcoordinate.error.coordinate_outside">
+        <source>mb.maptool.clickcoordinate.error.coordinate_outside</source>
+        <target>The given coordinate is beyond the map's extent</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

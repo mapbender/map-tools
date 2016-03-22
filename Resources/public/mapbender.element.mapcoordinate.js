@@ -132,7 +132,7 @@
                     console.log(point, ext_buff);
                     mbMap.olMap.zoomToExtent(ext_buff, true);
                 } else {
-                    Mapbender.error(" The given coordinate is beyond the map's extent.");
+                    Mapbender.error('mb.maptool.clickcoordinate.error.coordinate_outside');
                 }
             } else {
 //                Mapbender.error('');
