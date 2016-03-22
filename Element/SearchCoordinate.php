@@ -54,19 +54,6 @@ class SearchCoordinate extends Element
             'target' => null,
         );
     }
-//
-//    /**
-//     * @inheritdoc
-//     */
-//    public function getConfiguration()
-//    {
-//        $configuration = parent::getConfiguration();
-//        if (!isset($configuration['tools'])) {
-//            $default = self::getDefaultConfiguration();
-//            $configuration['tools'] = $default['tools'];
-//        }
-//        return $configuration;
-//    }
 
     /**
      * @inheritdoc
@@ -105,7 +92,7 @@ class SearchCoordinate extends Element
                 '@FOMCoreBundle/Resources/public/js/widgets/popup.js'
             ),
             'css' => array('@MapbenderMapToolBundle/Resources/public/sass/element/mapbender.element.mapcoordinate.scss'),
-            'trans' => array()
+            'trans' => array('MapbenderMapToolBundle:Element:searchcoordinate.json.twig')
         );
     }
 

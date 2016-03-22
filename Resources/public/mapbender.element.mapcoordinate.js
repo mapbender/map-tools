@@ -132,7 +132,7 @@
                     console.log(point, ext_buff);
                     mbMap.olMap.zoomToExtent(ext_buff, true);
                 } else {
-                    Mapbender.error('mb.maptool.clickcoordinate.error.coordinate_outside');
+                    Mapbender.info(Mapbender.trans('mb.maptool.searchcoordinate.error.coordinate_outside'));
                 }
             } else {
 //                Mapbender.error('');
