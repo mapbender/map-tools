@@ -52,7 +52,41 @@ class ClickCoordinate extends Element
         return array(
             'type' => null,
             'target' => null,
+            'srs_list' => '',
+            'add_map_srs_list' => true
         );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getConfiguration()
+    {
+        $configuration = parent::getConfiguration();
+        $configuration['srsDefs'] = array();
+        if (isset($configuration["srs_list"])) {
+            if (is_array($configuration["srs_list"])) {
+                $srs_list = $configuration["srs_list"];
+            } elseif (is_string($configuration["srs_list"]) && strlen(trim($configuration["srs_list"])) > 0) {
+                $srs_list = preg_split("/\s?,\s?/", $configuration["srs_list"]);
+            }
+            foreach ($srs_list as $srs) {
+                if (is_int(stripos($srs, "|"))) {
+                    $srsHlp   = preg_split("/\s?\|{1}\s?/", $srs);
+                    $allsrs[] = array(
+                        "name" => trim($srsHlp[0]),
+                        "title" => strlen(trim($srsHlp[1])) > 0 ? trim($srsHlp[1]) : '');
+                } else {
+                    $allsrs[] = array(
+                        "name" => $srs,
+                        "title" => '');
+                }
+            }
+            $allsrs = array_unique($allsrs, SORT_REGULAR);
+            $configuration["srsDefs"] = $this->getSrsDefinitions($allsrs);
+            unset($configuration["srs_list"]);
+        }
+        return $configuration;
     }
 
 
@@ -61,7 +95,7 @@ class ClickCoordinate extends Element
      */
     public function getWidgetName()
     {
-        return 'mapbender.mbMapCoordinate';
+        return 'mapbender.mbMapClickCoordinate';
     }
 
     /**
@@ -69,7 +103,7 @@ class ClickCoordinate extends Element
      */
     public static function getType()
     {
-        return 'Mapbender\MapToolBundle\Element\Type\InputOutputCoordinateAdminType';
+        return 'Mapbender\MapToolBundle\Element\Type\ClickCoordinateAdminType';
     }
 
     /**
@@ -77,7 +111,7 @@ class ClickCoordinate extends Element
      */
     public static function getFormTemplate()
     {
-        return 'MapbenderMapToolBundle:ElementAdmin:inputoutputcoordinate.html.twig';
+        return 'MapbenderMapToolBundle:ElementAdmin:clickcoordinate.html.twig';
     }
 
     /**
@@ -87,9 +121,10 @@ class ClickCoordinate extends Element
     {
         return array(
             'js' => array(
-                '@MapbenderMapToolBundle/Resources/public/mapbender.element.mapcoordinate.js',
+                '@MapbenderMapToolBundle/Resources/public/mapbender.element.clickcoordinate.js',
                 '@MapbenderMapToolBundle/Resources/public/mapbender.container.info.js',
-                '@FOMCoreBundle/Resources/public/js/widgets/popup.js'
+                '@FOMCoreBundle/Resources/public/js/widgets/popup.js',
+                '@FOMCoreBundle/Resources/public/js/widgets/dropdown.js'
             ),
             'css' => array('@MapbenderMapToolBundle/Resources/public/sass/element/mapbender.element.mapcoordinate.scss'),
             'trans' => array()
@@ -110,5 +145,38 @@ class ClickCoordinate extends Element
                     'configuration' => $this->getConfiguration()
                     )
         );
+    }
+
+    /**
+     * Returns proj4js srs definitions from srs names
+     * @param array $srsNames srs names (array with "EPSG" codes)
+     * @return array proj4js srs definitions
+     */
+    protected function getSrsDefinitions(array $srsNames)
+    {
+        $result = array();
+        if (is_array($srsNames) && count($srsNames) > 0) {
+            $names = array();
+            foreach ($srsNames as $srsName) {
+                $names[] = $srsName['name'];
+            }
+            $em    = $this->container->get("doctrine")->getManager();
+            $query = $em->createQuery("SELECT srs FROM MapbenderCoreBundle:SRS srs"
+                    . " Where srs.name IN (:name)  ORDER BY srs.id ASC")
+                ->setParameter('name', $names);
+            $srses = $query->getResult();
+            foreach ($srsNames as $srsName) {
+                foreach ($srses as $srs) {
+                    if ($srsName['name'] === $srs->getName()) {
+                        $result[] = array(
+                            "name" => $srs->getName(),
+                            "title" => strlen($srsName["title"]) > 0 ? $srsName["title"] : $srs->getTitle(),
+                            "definition" => $srs->getDefinition());
+                        break;
+                    }
+                }
+            }
+        }
+        return $result;
     }
 }

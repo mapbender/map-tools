@@ -89,7 +89,8 @@ class SearchCoordinate extends Element
             'js' => array(
                 '@MapbenderMapToolBundle/Resources/public/mapbender.element.mapcoordinate.js',
                 '@MapbenderMapToolBundle/Resources/public/mapbender.container.info.js',
-                '@FOMCoreBundle/Resources/public/js/widgets/popup.js'
+                '@FOMCoreBundle/Resources/public/js/widgets/popup.js',
+                '@FOMCoreBundle/Resources/public/js/widgets/dropdown.js'
             ),
             'css' => array('@MapbenderMapToolBundle/Resources/public/sass/element/mapbender.element.mapcoordinate.scss'),
             'trans' => array('MapbenderMapToolBundle:Element:searchcoordinate.json.twig')

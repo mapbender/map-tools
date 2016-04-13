@@ -1,0 +1,14 @@
+<div class="defaultForm elementForm">
+    {{ form_label(form.title) }}{{ form_widget(form.title) }}
+    <div class="clearContainer"></div>
+    {{ form_label(form.configuration.target) }}{{ form_widget(form.configuration.target) }}
+    <div class="clearContainer"></div>
+    {{ form_label(form.configuration.type) }}{{ form_widget(form.configuration.type) }}
+    <div class="clearContainer"></div>
+    {{ form_label(form.configuration.srs_list) }}{{ form_widget(form.configuration.srs_list) }}
+    <div class="clearContainer"></div>
+    <div class="left">
+    {{ form_widget(form.configuration.add_map_srs_list) }}<label for="{{form.configuration.add_map_srs_list.vars.id}}" class="labelCheck">add map's srs list</label>
+    </div>
+    <div class="clearContainer"></div>
+</div>
