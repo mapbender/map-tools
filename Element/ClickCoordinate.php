@@ -86,6 +86,9 @@ class ClickCoordinate extends Element
             $configuration["srsDefs"] = $this->getSrsDefinitions($allsrs);
             unset($configuration["srs_list"]);
         }
+        if(!isset($configuration['add_map_srs_list'])){
+            $configuration['add_map_srs_list'] = true;
+        }
         return $configuration;
     }
 
