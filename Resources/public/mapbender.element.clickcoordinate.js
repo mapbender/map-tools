@@ -287,6 +287,8 @@
             if(this.transformer.geom_internal){
                 this.feature = [new OpenLayers.Feature.Vector(this.transformer.geom_internal.geom)];
                 Mapbender.Model.highlightOn(this.feature, {clearFirst: true, "goto": false});
+            } else {
+                this._removeFeature();
             }
         },
         _removeFeature: function(){
