@@ -64,7 +64,6 @@ class ClickCoordinate extends Element
      */
     public function getConfiguration()
     {
-//        $defaultConfiguration = $this->getDefaultConfiguration();
         $configuration = array_merge($this->getDefaultConfiguration(), parent::getConfiguration());
         $configuration['srsDefs'] = array();
         if (isset($configuration["srs_list"])) {
@@ -72,6 +71,8 @@ class ClickCoordinate extends Element
                 $srs_list = $configuration["srs_list"];
             } elseif (is_string($configuration["srs_list"]) && strlen(trim($configuration["srs_list"])) > 0) {
                 $srs_list = preg_split("/\s?,\s?/", $configuration["srs_list"]);
+            } else {
+                $srs_list = array();
             }
             foreach ($srs_list as $srs) {
                 if (is_int(stripos($srs, "|"))) {
@@ -88,12 +89,6 @@ class ClickCoordinate extends Element
             $allsrs = array_unique($allsrs, SORT_REGULAR);
             $configuration["srsDefs"] = $this->getSrsDefinitions($allsrs);
             unset($configuration["srs_list"]);
-        }
-        if(!isset($configuration['add_map_srs_list'])){
-            $configuration['add_map_srs_list'] = true;
-        }
-        if(!isset($configuration['add_map_srs_list'])){
-
         }
         return $configuration;
     }
