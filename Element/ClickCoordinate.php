@@ -64,7 +64,8 @@ class ClickCoordinate extends Element
      */
     public function getConfiguration()
     {
-        $configuration = parent::getConfiguration();
+//        $defaultConfiguration = $this->getDefaultConfiguration();
+        $configuration = array_merge($this->getDefaultConfiguration(), parent::getConfiguration());
         $configuration['srsDefs'] = array();
         if (isset($configuration["srs_list"])) {
             if (is_array($configuration["srs_list"])) {
@@ -90,6 +91,9 @@ class ClickCoordinate extends Element
         }
         if(!isset($configuration['add_map_srs_list'])){
             $configuration['add_map_srs_list'] = true;
+        }
+        if(!isset($configuration['add_map_srs_list'])){
+
         }
         return $configuration;
     }
