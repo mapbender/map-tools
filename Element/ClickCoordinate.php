@@ -74,6 +74,7 @@ class ClickCoordinate extends Element
             } else {
                 $srs_list = array();
             }
+            $allsrs = array();
             foreach ($srs_list as $srs) {
                 if (is_int(stripos($srs, "|"))) {
                     $srsHlp   = preg_split("/\s?\|{1}\s?/", $srs);
