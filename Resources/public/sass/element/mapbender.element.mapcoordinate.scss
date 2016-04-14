@@ -9,6 +9,24 @@
     div.block{
         margin-bottom: 10px;
     }
+    .collapsible{
+        position:absolute;
+        top: 0;
+        right: 4px;
+        color: $thirdColor;
+        &.iconCheckbox:before{
+            content:"\f078" !important;
+        }
+        &.iconCheckbox.iconCheckboxActive:before{
+            content:"\f077" !important;
+        }
+    }
+    .coords-extern .content{
+        display: none;
+    }
+    .coords-extern.opened .content{
+        display: block;
+    }
     .dropdown{
         width:100% !important;
         margin-bottom: 10px;}

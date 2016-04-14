@@ -8,7 +8,14 @@
     {{ form_label(form.configuration.srs_list) }}{{ form_widget(form.configuration.srs_list) }}
     <div class="clearContainer"></div>
     <div class="left">
-    {{ form_widget(form.configuration.add_map_srs_list) }}<label for="{{form.configuration.add_map_srs_list.vars.id}}" class="labelCheck">add map's srs list</label>
+    {{ form_widget(form.configuration.add_map_srs_list) }}<label for="{{form.configuration.add_map_srs_list.vars.id}}" class="labelCheck">{{ "mb.maptool.clickcoordinate.extern.add_map_srs_list.label"|trans }}</label>
+    </div>
+    <div class="clearContainer"></div>
+    <div class="left">
+    {{ form_widget(form.configuration.extern_collapsible) }}<label for="{{form.configuration.extern_collapsible.vars.id}}" class="labelCheck">{{ "mb.maptool.clickcoordinate.extern.collapsible.label"|trans }}</label>
+    </div>
+    <div class="left">
+    {{ form_widget(form.configuration.extern_opened) }}<label for="{{form.configuration.extern_opened.vars.id}}" class="labelCheck">{{ "mb.maptool.clickcoordinate.extern.opened.label"|trans }}</label>
     </div>
     <div class="clearContainer"></div>
 </div>

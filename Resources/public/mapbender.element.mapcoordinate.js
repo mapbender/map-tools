@@ -129,7 +129,7 @@
                     this.feature = [new OpenLayers.Feature.Vector(point, poi)];
                     Mapbender.Model.highlightOn(this.feature, {clearFirst: true, "goto": false});
                     var ext_buff = Mapbender.Model.calculateExtent(point, {w: this.buffer, h: this.buffer});
-                    console.log(point, ext_buff);
+//                    console.log(point, ext_buff);
                     mbMap.olMap.zoomToExtent(ext_buff, true);
                 } else {
                     Mapbender.info(Mapbender.trans('mb.maptool.searchcoordinate.error.coordinate_outside'));

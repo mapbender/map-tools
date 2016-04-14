@@ -47,6 +47,8 @@ class ClickCoordinateAdminType extends AbstractType
                 'property_path' => '[target]',
                 'required' => false))
             ->add('srs_list', 'text', array('required' => false))
-            ->add('add_map_srs_list', 'checkbox', array('required' => false));
+            ->add('add_map_srs_list', 'checkbox', array('required' => false))
+            ->add('extern_collapsible', 'checkbox', array('required' => false))
+            ->add('extern_opened', 'checkbox', array('required' => false));
     }
 }

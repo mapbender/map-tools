@@ -53,7 +53,9 @@ class ClickCoordinate extends Element
             'type' => null,
             'target' => null,
             'srs_list' => '',
-            'add_map_srs_list' => true
+            'add_map_srs_list' => true,
+            'extern_collapsible' => true,
+            'extern_opened' => true
         );
     }
 

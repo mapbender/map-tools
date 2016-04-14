@@ -178,7 +178,15 @@
             this.mapClickHandler.activate();
             $(window).on('keydown', $.proxy(this._keyDown, this));
             $(window).on('keyup', $.proxy(this._keyUp, this));
+            $('.coords-extern .collapsible .checkbox', self.element).on('change', $.proxy(this._collapseExtern, this));
             this.activated = true;
+        },
+        _collapseExtern: function(e) {
+            if($(e.target).prop('checked')){
+                $(e.target).parents('.coords-extern:first').addClass('opened');
+            } else {
+                $(e.target).parents('.coords-extern:first').removeClass('opened');
+            }
         },
         _activateElement: function() {
             var self = this;
