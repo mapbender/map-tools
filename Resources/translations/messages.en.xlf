@@ -98,6 +98,18 @@
         <source>mb.maptool.searchcoordinate.error.coordinate_outside</source>
         <target>The given coordinate is beyond the map's extent.</target>
       </trans-unit>
+      <trans-unit id="e4592b5d19b7f67cf14260c737e46d7d" resname="mb.maptool.clickcoordinate.extern.add_map_srs_list.label">
+        <source>mb.maptool.clickcoordinate.extern.add_map_srs_list.label</source>
+        <target>Add map's srs list</target>
+      </trans-unit>
+      <trans-unit id="05e8893364fe575fa088193154b943be" resname="mb.maptool.clickcoordinate.extern.collapsible.label">
+        <source>mb.maptool.clickcoordinate.extern.collapsible.label</source>
+        <target>Coordinates output toggleable</target>
+      </trans-unit>
+      <trans-unit id="f634abf6485d3ef2a67ae842aadc3e4e" resname="mb.maptool.clickcoordinate.extern.opened.label">
+        <source>mb.maptool.clickcoordinate.extern.opened.label</source>
+        <target>Coordinates output opened</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

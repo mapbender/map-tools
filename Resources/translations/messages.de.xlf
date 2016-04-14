@@ -98,6 +98,18 @@
         <source>mb.maptool.searchcoordinate.error.coordinate_outside</source>
         <target>Die eingegebenen Koordinaten befinden sich außerhalb des Kartenbereichs.</target>
       </trans-unit>
+      <trans-unit id="e4592b5d19b7f67cf14260c737e46d7d" resname="mb.maptool.clickcoordinate.extern.add_map_srs_list.label">
+        <source>mb.maptool.clickcoordinate.extern.add_map_srs_list.label</source>
+        <target>Map's Srs hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="05e8893364fe575fa088193154b943be" resname="mb.maptool.clickcoordinate.extern.collapsible.label">
+        <source>mb.maptool.clickcoordinate.extern.collapsible.label</source>
+        <target>Koordinatenausgabe aufklappbar</target>
+      </trans-unit>
+      <trans-unit id="f634abf6485d3ef2a67ae842aadc3e4e" resname="mb.maptool.clickcoordinate.extern.opened.label">
+        <source>mb.maptool.clickcoordinate.extern.opened.label</source>
+        <target>Koordinatenausgabe geöffnet</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
