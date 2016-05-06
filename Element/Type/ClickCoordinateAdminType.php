@@ -34,6 +34,13 @@ class ClickCoordinateAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // only single ascii as string !!!
+        $choices = array(
+            '44' => 'comma',
+            '59' => 'semicolon',
+            '32' => 'space'
+        );
+        $choicesExt = $choices + array( '10' => 'new line');// only single ascii !!!
         $builder->add('title', 'text', array('required' => false))
             ->add('type', 'choice', array(
                 'required' => true,
@@ -49,6 +56,18 @@ class ClickCoordinateAdminType extends AbstractType
             ->add('srs_list', 'text', array('required' => false))
             ->add('add_map_srs_list', 'checkbox', array('required' => false))
             ->add('extern_collapsible', 'checkbox', array('required' => false))
-            ->add('extern_opened', 'checkbox', array('required' => false));
+            ->add('extern_opened', 'checkbox', array('required' => false))
+            ->add('sep_ord_field', 'choice', array(
+                'required' => true,
+                'choices' => $choices))
+            ->add('sep_coord_field', 'choice', array(
+                'required' => true,
+                'choices' => $choices))
+            ->add('sep_ord_clipboard', 'choice', array(
+                'required' => true,
+                'choices' => $choicesExt))
+            ->add('sep_coord_clipboard', 'choice', array(
+                'required' => true,
+                'choices' => $choicesExt));
     }
 }

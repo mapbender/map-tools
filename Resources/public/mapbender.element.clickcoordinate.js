@@ -1,103 +1,95 @@
 (function($) {
-    function DefaultStringBuilder(separator_ordinates, separator_coordinates, decimal_metric, decimal_angular){
-        this.sep_ord = separator_ordinates ? separator_ordinates : ' ';
-        this.sep_coord = separator_coordinates ? separator_coordinates : ',';
-        this.result = '';
-        this.dec_metric = decimal_metric ? decimal_metric : 2;
-        this.dec_angular = decimal_angular ? decimal_angular : 6;
-        this.decimal = this.dec_metric;
-        this.appendPoint = function(point){
-            this.result += (this.result.length ? this.sep_coord : '') + point.x.toFixed(this.decimal) + this.sep_ord + point.y.toFixed(this.decimal);
+    function SimpleStringBuilder(separator_ordinates, separator_coordinates, fractiondigit, reverse_ordinates){
+        var _reverse = false;
+        var _result = null;
+        var _sep_ord = null;
+        var _sep_coord = null;
+        var _fraction = null;
+        this.init = function(separator_ordinates, separator_coordinates, fractiondigit, reverse_ordinates){
+            _result = '';
+            _sep_ord = String.fromCharCode(separator_ordinates);
+            _sep_coord = String.fromCharCode(separator_coordinates);
+            _fraction = fractiondigit;
+            _reverse = reverse_ordinates;
         };
-        this.resetResult = function(projection){
-            this.decimal = projection.proj.units === 'degrees' || projection.proj.units === 'dd' ? this.dec_angular : this.dec_metric;
-            var str = new String(this.result).toString();
-            this.result = '';
-            return str;
+        this.init(separator_ordinates, separator_coordinates, fractiondigit, reverse_ordinates);
+        this.appendPoint = function(point){
+            _result += _result.length ? _sep_coord : '';
+            if(_reverse){
+                _result += point.y.toFixed(_fraction) + _sep_ord + point.x.toFixed(_fraction);
+            } else {
+                _result += point.x.toFixed(_fraction) + _sep_ord + point.y.toFixed(_fraction);
+            }
+        };
+        this.getResult = function(){
+            return _result;
         };
     }
-    function Geometry(projection, geom) {
-        this.projection = projection;
-        this.geom = geom;
-        this.geomToString = function(string_builder){
-            string_builder.resetResult(this.projection);
-            if(this.geom instanceof OpenLayers.Geometry.MultiPoint) {
-                for(var i = 0; i < this.geom.components.length; i++){
-                    string_builder.appendPoint(this.geom.components[i]);
-                }
-                return string_builder.resetResult(this.projection);
+    function ClickGeometry(projection, geom) {
+        var _projection = null;
+        var _geom = null;
+        this.init = function(projection, geom){
+            _projection = projection;
+            if(!geom) {
+                _geom = new OpenLayers.Geometry.Collection();
+            } else if(geom instanceof OpenLayers.Geometry.Collection) {
+                _geom = geom.clone();
             } else {
-                throw new Error('other geometry type are not implemented');
+                _geom = new OpenLayers.Geometry.Collection(geom);
             }
+        };
+        this.init(projection, geom);
+        
+        this.isEnabled = function(){
+            return _projection && _geom;
+        };
+        
+        this.getGeom = function(){
+            return _geom;
+        };
+        this.geomToString = function(separator_ordinates, separator_coordinates){
+            var decimal = _projection.proj.units === 'degrees' || _projection.proj.units === 'dd' ? 6 : 2;
+            var reverse = false; // to check for projection
+            var builder = new SimpleStringBuilder(separator_ordinates, separator_coordinates, decimal, reverse);
+            for(var i = 0; i < _geom.components.length; i++){
+                builder.appendPoint(_geom.components[i]);
+            }
+            return builder.getResult();
         };
         this.addGeom = function(projection, geom){
-            if(this.geom instanceof OpenLayers.Geometry.MultiPoint && geom instanceof OpenLayers.Geometry.Point) {
-                if(this.projection.projCode !== projection.projCode) {
-                    this.geom.addPoint(geom.clone().transform(projection, this.projection));
-                } else {
-                    this.geom.addPoint(geom);
-                }
+            if(_projection.projCode !== projection.projCode) {
+                _geom.addComponents(geom.clone().transform(projection, _projection));
+            } else {
+                _geom.addComponents(geom.clone());
             }
+        };
+        this.transform = function(projection){
+            if(_projection.projCode !== projection.projCode) {
+                _geom.transform(_projection, projection);
+                _projection = projection;
+            }
+        };
+        this.clone = function(projection){
+            var geom = new ClickGeometry(_projection, _geom);
+            geom.transform(projection);
+            return geom;
         }
     }
-    function Transformer(){
-        this.geom_internal = null;
-        this.geom_external = null;
-        this.setInternal = function(projection, geom, extern_projection){
-            this.geom_internal = new Geometry(projection, geom);
-            if(projection.projCode !== extern_projection.projCode){
-                this.geom_external = new Geometry(extern_projection,
-                    this.geom_internal.geom.clone().transform(projection, extern_projection));
-            } else {
-                this.geom_external = new Geometry(extern_projection, this.geom_internal.geom.clone());
-            }
-        };
-        this.changeInternalProjection = function(projection){
-            if(this.geom_internal && this.geom_internal.projection.projCode !== projection.projCode){
-                this.geom_internal.geom = this.geom_internal.geom.transform(this.geom_internal.projection, projection);
-                this.geom_internal.projection = projection;
-                this.geom_external.geom = this.geom_internal.geom.clone().transform(this.geom_internal.projection, this.geom_external.projection);
-            }
-        };
-        this.changeExternalProjection = function(projection){
-            if(this.geom_external && this.geom_external.projection.projCode !== projection.projCode){
-                this.geom_external.geom = this.geom_internal.geom.clone().transform(this.geom_internal.projection, projection);
-                this.geom_external.projection = projection;
-            }
-        };
-        
-        this.internalToString = function(string_builder){
-            return this.geom_internal ? this.geom_internal.geomToString(string_builder) : '';
-        };
-        
-        this.externalToString = function(string_builder){
-            return this.geom_external ? this.geom_external.geomToString(string_builder) : '';
-        };
-        
-        this.addToInternal = function(projection, geom, extern_projection){
-            if(!this.geom_internal){
-                this.setInternal(projection, geom, extern_projection);
-            } else {
-                this.geom_internal.addGeom(projection, geom);
-                if(this.geom_internal.projection.projCode !== extern_projection.projCode){
-                    this.geom_external = new Geometry(extern_projection,
-                        this.geom_internal.geom.clone().transform(this.geom_internal.projection, extern_projection));
-                } else {
-                    this.geom_external = new Geometry(extern_projection, this.geom_internal.geom.clone());
-                }
-            }
-        };
-    }
+    
     $.widget("mapbender.mbMapClickCoordinate", {
         options: {
             target: null,
-            type: 'dialog'
+            type: 'dialog',
+            sep_ord_field: 32, // only ascii 32 -> " "
+            sep_coord_field: 44, // only ascii 44 -> ","
+            sep_ord_clipboard: 44, // only ascii 44 -> ","
+            sep_coord_clipboard: 10 // only ascii 10 -> "\n"
         },
         mbMap: null,
         containerInfo: null,
         mapClickHandler: null,
         activated: false,
-        transformer: new Transformer(),
+        clickGeom: null,
         features:[],
         ctrlPressed: false,
         _create: function() {
@@ -108,8 +100,11 @@
         },
         _setup: function() {
             var self = this;
+            this.options.sep_ord_field = parseInt(this.options.sep_ord_field);
+            this.options.sep_coord_field = parseInt(this.options.sep_coord_field);
+            this.options.sep_ord_clipboard = parseInt(this.options.sep_ord_clipboard);
+            this.options.sep_coord_clipboard = parseInt(this.options.sep_coord_clipboard);
             this.mbMap = $("#" + this.options.target).data("mapbenderMbMap");
-//            this.srsDefs = this.mbMap.options.srsDefs;
             for (var i = 0; i < this.options.srsDefs.length; i++) {
                 Proj4js.defs[this.options.srsDefs[i].name] = this.options.srsDefs[i].definition;
             }
@@ -162,10 +157,11 @@
             
             $(document).on('mbmapsrschanged', $.proxy(this._onSrsChanged, this));
             $(document).on('mbmapsrsadded', $.proxy(this._onSrsAdded, this));
-            $('.copyClipBoard', this.element).on('click',  $.proxy(this._copyToClipboard, this));
+            $('.copyClipBoard', this.element).on('click',  $.proxy(this._clickCopy, this));
             $('.buttonGroup .button.resetFields', this.element).on('click',  $.proxy(this._resetFields, this));
 
             this.mbMap.map.element.addClass('crosshair');
+            this.clickGeom = new ClickGeometry(Mapbender.Model.getCurrentProj(), null);
             this._resetFields();
             $('select.inputSrs', self.element).on('change', $.proxy(this._srsChanged, this));
 
@@ -227,7 +223,7 @@
             }
             $('select.inputSrs', this.element).off('change', $.proxy(this.srsChanged, this));
             $('#srsList', this.element).off('change', $.proxy(this._changeSrs, this));
-            $('.copyClipBoard', this.element).off('click',  $.proxy(this._copyToClipboard, this));
+            $('.copyClipBoard', this.element).off('click',  $.proxy(this._clickCopyToClipboard, this));
             $('.buttonGroup .button.resetFields', this.element).off('click',  $.proxy(this._resetFields, this));
             $('select.inputSrs', this.element).off('change', $.proxy(this._srsChanged, this));
             
@@ -241,6 +237,7 @@
             this._removeFeature();
             this.ctrlPressed = false;
             this.activated = false;
+            this.clickGeom = null;
         },
         _deactivateElement: function() {
             ;
@@ -265,35 +262,51 @@
             }
         },
         _srsChanged: function(event, srsObj){
-            this.transformer.changeExternalProjection(Mapbender.Model.getProj($('select.inputSrs', this.element).val()));
             this._updateFileds();
         },
         _onSrsChanged: function(event, srsObj){
-            this.transformer.changeInternalProjection(Mapbender.Model.getCurrentProj());
+            this.clickGeom.transform(Mapbender.Model.getCurrentProj());
             this._updateFileds();
         },
         _onSrsAdded: function(event, srsObj){
             $('.inputSrs', this.element).append($('<option></option>').val(srsObj.name).html(srsObj.title));
         },
-        _copyToClipboard: function(e){
-            $(e.target).parent().find('input').select();
-             document.execCommand("copy");
+        _clickCopy: function(e){
+            var $input = $(e.target).parent().find('input');
+            var clickgeom = null;
+            if($input.hasClass('inputCoordinate')) {
+                clickgeom = this.clickGeom.clone(Mapbender.Model.getProj($('select.inputSrs', this.element).val()));
+                this._copyToClipboard(clickgeom.geomToString(this.options.sep_ord_clipboard, this.options.sep_coord_clipboard));
+            } else if($input.hasClass('mapCoordinate')){
+                this._copyToClipboard(this.clickGeom.geomToString(this.options.sep_ord_clipboard, this.options.sep_coord_clipboard));
+            }
         },
-        
+        _copyToClipboard: function(text){
+            var $temp = $('<textarea></textarea>');
+            $('body').append($temp);
+            $temp.val(text);
+            $temp.select();
+            document.execCommand("copy");
+            $temp.remove();
+        },
         _resetFields: function(e){
-            this.transformer.geom_internal = null;
-            this.transformer.geom_external = null;
+            this.clickGeom = new ClickGeometry(Mapbender.Model.getCurrentProj(), null);
             this._updateFileds();
         },
         _updateFileds: function(){
-            var stringBuilder = new DefaultStringBuilder();
-            $('input.mapCoordinate', this.element).val(this.transformer.internalToString(stringBuilder));
-            $('input.inputCoordinate', this.element).val(this.transformer.externalToString(stringBuilder));
+            if(this.clickGeom.isEnabled()){
+                $('input.mapCoordinate', this.element).val(this.clickGeom.geomToString(this.options.sep_ord_field, this.options.sep_coord_field));
+                var cloned = this.clickGeom.clone(Mapbender.Model.getProj($('select.inputSrs', this.element).val()));
+                $('input.inputCoordinate', this.element).val(cloned.geomToString(this.options.sep_ord_field, this.options.sep_coord_field));
+            } else {
+                $('input.mapCoordinate', this.element).val('');
+                $('input.inputCoordinate', this.element).val('');
+            }
             this._showFeature();
         },
         _showFeature: function(){
-            if(this.transformer.geom_internal){
-                this.feature = [new OpenLayers.Feature.Vector(this.transformer.geom_internal.geom)];
+            if(this.clickGeom.isEnabled()){
+                this.feature = [new OpenLayers.Feature.Vector(this.clickGeom.getGeom())];
                 Mapbender.Model.highlightOn(this.feature, {clearFirst: true, "goto": false});
             } else {
                 this._removeFeature();
@@ -305,14 +318,12 @@
             }
         },
         _mapClick: function(e){
-            var projection = Mapbender.Model.getCurrentProj();
-            var projection_extern = Mapbender.Model.getProj($('select.inputSrs', self.element).val());
             var lonlat = this.mbMap.map.olMap.getLonLatFromPixel(e.xy);
             var click_point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
             if(this.ctrlPressed){
-                this.transformer.addToInternal(projection, click_point, projection_extern);
+                 this.clickGeom.addGeom(Mapbender.Model.getCurrentProj(), click_point);
             } else {
-                this.transformer.setInternal(projection, new OpenLayers.Geometry.MultiPoint([click_point]), projection_extern);
+                this.clickGeom = new ClickGeometry(Mapbender.Model.getCurrentProj(), click_point);
             }
             this._updateFileds();
             return false;

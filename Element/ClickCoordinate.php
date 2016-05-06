@@ -55,7 +55,11 @@ class ClickCoordinate extends Element
             'srs_list' => '',
             'add_map_srs_list' => true,
             'extern_collapsible' => true,
-            'extern_opened' => true
+            'extern_opened' => true,
+            'sep_ord_field' => '32', // only single ascii
+            'sep_coord_field' => '44', // only single ascii
+            'sep_ord_clipboard' => '44', // only single ascii
+            'sep_coord_clipboard' => '10', // only single ascii
         );
     }
 

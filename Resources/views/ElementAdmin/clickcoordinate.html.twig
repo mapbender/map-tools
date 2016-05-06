@@ -7,6 +7,14 @@
     <div class="clearContainer"></div>
     {{ form_label(form.configuration.srs_list) }}{{ form_widget(form.configuration.srs_list) }}
     <div class="clearContainer"></div>
+    {{ form_label(form.configuration.sep_ord_field) }}{{ form_widget(form.configuration.sep_ord_field) }}
+    <div class="clearContainer"></div>
+    {{ form_label(form.configuration.sep_coord_field) }}{{ form_widget(form.configuration.sep_coord_field) }}
+    <div class="clearContainer"></div>
+    {{ form_label(form.configuration.sep_ord_clipboard) }}{{ form_widget(form.configuration.sep_ord_clipboard) }}
+    <div class="clearContainer"></div>
+    {{ form_label(form.configuration.sep_coord_clipboard) }}{{ form_widget(form.configuration.sep_coord_clipboard) }}
+    <div class="clearContainer"></div>
     <div class="left">
     {{ form_widget(form.configuration.add_map_srs_list) }}<label for="{{form.configuration.add_map_srs_list.vars.id}}" class="labelCheck">{{ "mb.maptool.clickcoordinate.extern.add_map_srs_list.label"|trans }}</label>
     </div>
