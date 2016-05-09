@@ -277,8 +277,10 @@
             if($input.hasClass('inputCoordinate')) {
                 clickgeom = this.clickGeom.clone(Mapbender.Model.getProj($('select.inputSrs', this.element).val()));
                 this._copyToClipboard(clickgeom.geomToString(this.options.sep_ord_clipboard, this.options.sep_coord_clipboard));
+                $input.select();
             } else if($input.hasClass('mapCoordinate')){
                 this._copyToClipboard(this.clickGeom.geomToString(this.options.sep_ord_clipboard, this.options.sep_coord_clipboard));
+                $input.select();
             }
         },
         _copyToClipboard: function(text){
