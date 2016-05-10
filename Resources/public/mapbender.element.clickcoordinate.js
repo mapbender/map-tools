@@ -80,10 +80,10 @@
         options: {
             target: null,
             type: 'dialog',
-            sep_ord_field: 32, // only ascii 32 -> " "
-            sep_coord_field: 44, // only ascii 44 -> ","
-            sep_ord_clipboard: 44, // only ascii 44 -> ","
-            sep_coord_clipboard: 10 // only ascii 10 -> "\n"
+            sep_ord_field: 32, // only ascii, 32 -> " "
+            sep_coord_field: 44, // only ascii, 44 -> ","
+            sep_ord_clipboard: 44, // only ascii, 44 -> ","
+            sep_coord_clipboard: 10 // only ascii, 10 -> "\n"
         },
         mbMap: null,
         containerInfo: null,
@@ -172,8 +172,6 @@
                 );
             }
             this.mapClickHandler.activate();
-            $(window).on('keydown', $.proxy(this._keyDown, this));
-            $(window).on('keyup', $.proxy(this._keyUp, this));
             $('.coords-extern .collapsible .checkbox', self.element).on('change', $.proxy(this._collapseExtern, this));
             this.activated = true;
         },
@@ -229,8 +227,6 @@
             
             $(document).off('mbmapsrschanged', $.proxy(this._onSrsChanged, this));
             $(document).off('mbmapsrsadded', $.proxy(this._onSrsAdded, this));
-            $(window).off('keydown', $.proxy(this._keyDown, this));
-            $(window).off('keyup', $.proxy(this._keyUp, this));
             
             this.mbMap.element.removeClass('crosshair');
             this.callback ? this.callback.call() : this.callback = null;
@@ -249,16 +245,6 @@
                     this.popup.destroy();
                 }
                 this.popup = null;
-            }
-        },
-        _keyDown: function(e){
-            if (e.which == 17) { // ctrl
-                this.ctrlPressed = true;
-            }
-        },
-        _keyUp: function(e){
-            if (e.which == 17) { // ctrl
-                this.ctrlPressed = false;
             }
         },
         _srsChanged: function(event, srsObj){
@@ -322,7 +308,7 @@
         _mapClick: function(e){
             var lonlat = this.mbMap.map.olMap.getLonLatFromPixel(e.xy);
             var click_point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-            if(this.ctrlPressed){
+            if(e.ctrlKey){
                  this.clickGeom.addGeom(Mapbender.Model.getCurrentProj(), click_point);
             } else {
                 this.clickGeom = new ClickGeometry(Mapbender.Model.getCurrentProj(), click_point);
