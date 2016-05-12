@@ -136,7 +136,7 @@ class ClickCoordinate extends Element
                 '@FOMCoreBundle/Resources/public/js/widgets/dropdown.js'
             ),
             'css' => array('@MapbenderMapToolBundle/Resources/public/sass/element/mapbender.element.mapcoordinate.scss'),
-            'trans' => array()
+            'trans' => array('MapbenderMapToolBundle:Element:clickcoordinate.json.twig')
         );
     }
 

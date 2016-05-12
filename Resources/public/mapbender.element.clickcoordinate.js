@@ -270,12 +270,17 @@
             }
         },
         _copyToClipboard: function(text){
-            var $temp = $('<textarea></textarea>');
-            $('body').append($temp);
-            $temp.val(text);
-            $temp.select();
-            document.execCommand("copy");
-            $temp.remove();
+            if(document.queryCommandSupported('copy')) {
+                var $temp = $('<textarea></textarea>');
+                $('body').append($temp);
+                $temp.val(text);
+                $temp.select();
+                document.execCommand("copy");
+                $temp.remove();
+            }
+//             else {
+                Mapbender.info(Mapbender.trans("mb.maptool.clickcoordinate.copy.error.browser_not_supported"));
+//            }
         },
         _resetFields: function(e){
             this.clickGeom = new ClickGeometry(Mapbender.Model.getCurrentProj(), null);

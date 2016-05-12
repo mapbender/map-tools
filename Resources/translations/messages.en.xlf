@@ -110,6 +110,10 @@
         <source>mb.maptool.clickcoordinate.extern.opened.label</source>
         <target>Coordinates output opened</target>
       </trans-unit>
+      <trans-unit id="9cfd467e3f606f2e7f70d0f9c4fb5b81" resname="mb.maptool.clickcoordinate.copy.error.browser_not_supported">
+        <source>mb.maptool.clickcoordinate.copy.error.browser_not_supported</source>
+        <target>Your browser does not support 'copy to clipboard'- use, instead, 'ctrl + c'</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

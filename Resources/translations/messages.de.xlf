@@ -110,6 +110,10 @@
         <source>mb.maptool.clickcoordinate.extern.opened.label</source>
         <target>Koordinatenausgabe geöffnet</target>
       </trans-unit>
+      <trans-unit id="9cfd467e3f606f2e7f70d0f9c4fb5b81" resname="mb.maptool.clickcoordinate.copy.error.browser_not_supported">
+        <source>mb.maptool.clickcoordinate.copy.error.browser_not_supported</source>
+        <target>Ihr Browser unterstützt das Kopieren in die Zwischenablage nicht. Bitte nutzen Sie stattdessen die Tastenkombination 'Strg + C'</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
