@@ -277,10 +277,9 @@
                 $temp.select();
                 document.execCommand("copy");
                 $temp.remove();
-            }
-//             else {
+            } else {
                 Mapbender.info(Mapbender.trans("mb.maptool.clickcoordinate.copy.error.browser_not_supported"));
-//            }
+            }
         },
         _resetFields: function(e){
             this.clickGeom = new ClickGeometry(Mapbender.Model.getCurrentProj(), null);
