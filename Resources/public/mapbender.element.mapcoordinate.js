@@ -226,22 +226,33 @@
         defaultAction: function(callback) {
             this.activate(callback);
         },
-        activate: function(callback) {
+         activate: function(callback) {
+            var lastSrs = $('.inputSrs', this.element).val();
             var self = this;
             var allSrs = this.mbMap.getAllSrs();
             var select = $('.inputSrs', this.element);
-            select.html('');
-            for (var i = 0; i < allSrs.length; i++) {
-                select.append($('<option></option>').val(allSrs[i].name).html(allSrs[i].title));
+            
+            if (select.children().length === 0) {
+                select.html('');
+                for (var i = 0; i < allSrs.length; i++) {
+                    select.append($('<option></option>').val(allSrs[i].name).html(allSrs[i].title));
+                }
+                var current = this.mbMap.getModel().getCurrentProj();
+                select.val(current.projCode);
+                $('input.mapSrs', this.element).val(current.projCode);
             }
-            var current = this.mbMap.getModel().getCurrentProj();
-            select.val(current.projCode);
-            $('input.mapSrs', this.element).val(current.projCode);
+            
+            if (lastSrs !== null) {
+                select.val(lastSrs);
+            }
+
+            
             if (this.options.type === 'element') {
                 this._activateElement();
             } else if (this.options.type === 'dialog') {
                 this._activateDialog();
             }
+            
             this.callback = callback ? callback : null;
             $('.buttonGroup [data-modelname]', this.element).each(function(idx, item){
                 var $item = $(item);
@@ -274,7 +285,6 @@
                 $('.buttonGroup [data-modelname="InputModel"]', this.element).data('model').activate();
             }
         },
-        
         _copyToClipboard: function(e){
             $(e.target).parent().find('input').select();
              document.execCommand("copy");
