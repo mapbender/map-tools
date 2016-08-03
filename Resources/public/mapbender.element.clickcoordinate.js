@@ -129,7 +129,7 @@
         defaultAction: function(callback) {
             this.activate(callback);
         },
-                activate: function(callback) {
+        activate: function(callback) {
             var lastSrs = $('.inputSrs', this.element).val();
             var self = this;
             var select = $('.inputSrs', this.element);
