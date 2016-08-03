@@ -130,36 +130,47 @@
             this.activate(callback);
         },
         activate: function(callback) {
+            var lastSrs = $('.inputSrs', this.element).val();
             var self = this;
             var select = $('.inputSrs', this.element);
-            select.html('');
-            var tmp = {};
-            for (var i = 0; i < this.options.srsDefs.length; i++) {
-                tmp[this.options.srsDefs[i].name] = this.options.srsDefs[i].title;
-                select.append($('<option></option>').val(this.options.srsDefs[i].name).html(this.options.srsDefs[i].title));
-            }
-            var allSrs = this.mbMap.getAllSrs();
-            for (var i = 0; this.options.add_map_srs_list && i < allSrs.length; i++) {
-                if(!tmp[allSrs[i].name]){
-                    select.append($('<option></option>').val(allSrs[i].name).html(allSrs[i].title));
+
+            if (select.children().length === 0) {
+                select.html('');
+                var tmp = {};
+                for (var i = 0; i < this.options.srsDefs.length; i++) {
+                    tmp[this.options.srsDefs[i].name] = this.options.srsDefs[i].title;
+                    select.append($('<option></option>').val(this.options.srsDefs[i].name).html(this.options.srsDefs[i].title));
                 }
+                var allSrs = this.mbMap.getAllSrs();
+                for (var i = 0; this.options.add_map_srs_list && i < allSrs.length; i++) {
+                    if(!tmp[allSrs[i].name]){
+                        select.append($('<option></option>').val(allSrs[i].name).html(allSrs[i].title));
+                    }
+                }
+                var current = this.mbMap.getModel().getCurrentProj();
+
+                if(this.options.srsDefs.length){
+                    select.val(this.options.srsDefs[0].name);
+                } else {
+                    select.val(current.projCode);
+                }
+
+                $('input.mapSrs', this.element).val(current.projCode);
             }
-            var current = this.mbMap.getModel().getCurrentProj();
-            if(this.options.srsDefs.length){
-                select.val(this.options.srsDefs[0].name);
-            } else {
-                select.val(current.projCode);
+
+            if (lastSrs !== null) {
+                select.val(lastSrs);
             }
-            
-            $('input.mapSrs', this.element).val(current.projCode);
+
             if (this.options.type === 'element') {
                 this._activateElement();
             } else if (this.options.type === 'dialog') {
                 this._activateDialog();
             }
+
             initDropdown.call($('.dropdown', this.element).get(0));
             this.callback = callback ? callback : null;
-            
+
             $(document).on('mbmapsrschanged', $.proxy(this._onSrsChanged, this));
             $(document).on('mbmapsrsadded', $.proxy(this._onSrsAdded, this));
             $('.copyClipBoard', this.element).on('click',  $.proxy(this._copyToClipboard, this));
@@ -167,6 +178,7 @@
 
             this.mbMap.map.element.addClass('crosshair');
             this._resetFields();
+
             $('select.inputSrs', self.element).on('change', $.proxy(this._srsChanged, this));
 
             if(!this.mapClickHandler) {
