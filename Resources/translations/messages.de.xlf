@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="f207d53dde62bb3c160c4dfc0aa304d7" resname="mb.maptool.clickcoordinate.extern.input_coords.tooltip">
         <source>mb.maptool.clickcoordinate.extern.input_coords.tooltip</source>
-        <target>Ausgabe von Klick-Koordianten</target>
+        <target>Ausgabe von Klick-Koordinaten</target>
       </trans-unit>
       <trans-unit id="8e544ec30e06edceaf4439c522bc5600" resname="mb.maptool.clickcoordinate.copytoclipboard.tooltip">
         <source>mb.maptool.clickcoordinate.copytoclipboard.tooltip</source>
