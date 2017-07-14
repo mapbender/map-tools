@@ -1,0 +1,58 @@
+mb:
+  maptool:
+    clickcoordinate:
+      class:
+        title: 'Click coordinate'
+        description: 'Click coordinate'
+      tag:
+        coordinate: coordinate
+        click: click
+      extern:
+        crs:
+          title: 'Coordinate system'
+          tooltip: 'Coordinate system'
+        input_coords:
+          tooltip: 'Output coordinate/s'
+        add_map_srs_list:
+          label: 'Add map''s srs list'
+        collapsible:
+          label: 'Coordinates output toggleable'
+        opened:
+          label: 'Coordinates output opened'
+      copytoclipboard:
+        tooltip: 'Copy to clipboard'
+      intern:
+        coords:
+          title: 'Coordinate in map reference system'
+        input_coords:
+          tooltip: 'read only'
+      button:
+        reset: Reset
+      copy:
+        error:
+          browser_not_supported: 'Your browser does not support ''copy to clipboard''- use, instead, ''ctrl + c'''
+    searchcoordinate:
+      class:
+        title: 'Search coordinate'
+        description: 'Search coordinate'
+      tag:
+        coordinate: coordinate
+        search: search
+      extern:
+        crs:
+          title: 'Coordinate system'
+          tooltip: 'Coordinate system'
+        input_coords:
+          tooltip: 'Input coordinates. Use '','' or '' '' to separate ordinates'
+      copytoclipboard:
+        tooltip: 'Copy to clipboard'
+      intern:
+        coords:
+          title: 'Coordinate in map reference system'
+        input_coords:
+          tooltip: 'read only'
+      button:
+        reset: Reset
+        centermap: 'Center map'
+      error:
+        coordinate_outside: 'The given coordinate is beyond the map''s extent.'

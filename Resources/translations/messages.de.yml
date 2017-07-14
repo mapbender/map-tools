@@ -1,0 +1,58 @@
+mb:
+  maptool:
+    clickcoordinate:
+      class:
+        title: 'Klick Koordinate'
+        description: 'Klick Koordinate'
+      tag:
+        coordinate: coordinate
+        click: click
+      extern:
+        crs:
+          title: 'Koordinatensystem der Ausgabe von Koordinaten'
+          tooltip: 'Koordinatensystem für die Koordinatenausgabe auswählen'
+        input_coords:
+          tooltip: 'Ausgabe von Klick-Koordianten'
+        add_map_srs_list:
+          label: 'Map''s Srs hinzufügen'
+        collapsible:
+          label: 'Koordinatenausgabe aufklappbar'
+        opened:
+          label: 'Koordinatenausgabe geöffnet'
+      copytoclipboard:
+        tooltip: 'Koordinaten in die Zwischenablage kopieren'
+      intern:
+        coords:
+          title: 'Koordinaten im Basis-Koordinatensystem der Karte'
+        input_coords:
+          tooltip: 'nicht editierbar'
+      button:
+        reset: Zurücksetzen
+      copy:
+        error:
+          browser_not_supported: 'Ihr Browser unterstützt das Kopieren in die Zwischenablage nicht. Bitte nutzen Sie stattdessen die Tastenkombination ''Strg + C'''
+    searchcoordinate:
+      class:
+        title: 'Karte zentrieren'
+        description: 'Karte zentrieren'
+      tag:
+        coordinate: coordinate
+        search: search
+      extern:
+        crs:
+          title: 'Koordinatensystem der Suche'
+          tooltip: 'Koordinatensystem für die Koordinatensuche auswählen'
+        input_coords:
+          tooltip: 'Sucheingabefeld für Koordinaten: Ordinaten müssen mit „,“ getrennt werden; Dezimaltrennzeichen muss „.“ sein'
+      copytoclipboard:
+        tooltip: 'Koordinaten in die Zwischenablage kopieren'
+      intern:
+        coords:
+          title: 'Koordinaten im Basis-Koordinatensystem der Karte'
+        input_coords:
+          tooltip: 'nicht editierbar'
+      button:
+        reset: Zurücksetzen
+        centermap: 'Karte zentrieren'
+      error:
+        coordinate_outside: 'Die eingegebenen Koordinaten befinden sich außerhalb des Kartenbereichs.'
